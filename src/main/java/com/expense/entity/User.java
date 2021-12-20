@@ -1,8 +1,11 @@
 package com.expense.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "user")
 public class User {
