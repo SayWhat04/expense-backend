@@ -1,9 +1,12 @@
 package com.expense.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "expense")
 public class Expense {
@@ -26,7 +29,8 @@ public class Expense {
     @Column(name = "subCategory")
     private String subCategory;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    // @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

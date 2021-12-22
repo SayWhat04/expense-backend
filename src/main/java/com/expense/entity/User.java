@@ -25,4 +25,11 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Expense> expenses;
+
+    public void addExpenses(List<Expense> expenses) {
+        this.expenses.addAll(expenses);
+        for (Expense expense : expenses) {
+            expense.setUser(this);
+        }
+    }
 }

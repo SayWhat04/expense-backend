@@ -1,36 +1,47 @@
 package com.expense;
 
-import com.expense.dao.UserRepository;
 import com.expense.entity.Expense;
 import com.expense.entity.User;
+import com.expense.service.ExpenseService;
+import com.expense.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final ExpenseService expenseService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService, ExpenseService expenseService) {
+        this.userService = userService;
+        this.expenseService = expenseService;
     }
 
-    @PostMapping("/user")
-    public List<Expense> getUserExpenses(@RequestBody User user) {
-        return null;
+    @GetMapping("/{userId}")
+    public User getUserById(@PathVariable int userId) {
+        return userService.getUserById(userId);
     }
 
+    @GetMapping("/{userId}/expenses")
+    public List<Expense> getUserExpenses(@PathVariable int userId) {
+        return expenseService.getUserExpenses(userId);
+    }
 
-    @PostMapping("/user")
+    @PostMapping("/")
     public User addUser(@RequestBody User user) {
-        this.userRepository.save(user);
-        return user;
+        return this.userService.addUser(user);
+    }
+
+    @PostMapping("/{userId}/expenses")
+    public void addExpensesToUser(@PathVariable int userId,
+                                  @RequestBody List<Expense> expenses) {
+        User user = this.userService.getUserById(userId);
+        user.addExpenses(expenses);
+        this.expenseService.addExpenses(expenses);
     }
 }
