@@ -1,7 +1,7 @@
 package com.expense.service;
 
-import com.expense.dao.UserRepository;
 import com.expense.entity.User;
+import com.expense.infrastructure.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -27,21 +27,24 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    @GetMapping("/{userId}/expenses")
-    public List<Expense> getUserExpenses(@PathVariable int userId) {
-        return expenseService.getUserExpenses(userId);
-    }
-
     @PostMapping("/")
     public User addUser(@RequestBody User user) {
         return this.userService.addUser(user);
     }
 
-    @PostMapping("/{userId}/expenses")
+    @PatchMapping("/{userId}/expenses")
     public void addExpensesToUser(@PathVariable int userId,
                                   @RequestBody List<Expense> expenses) {
         User user = this.userService.getUserById(userId);
         user.addExpenses(expenses);
         this.expenseService.addExpenses(expenses);
+    }
+
+    @GetMapping("/{userId}/expenses")
+    public List<Expense> getUserExpensesByCriteria(@PathVariable int userId,
+                                                   @RequestParam(name = "category") String category,
+                                                   @RequestParam(name = "subCategory") String subCategory) {
+
+        return this.expenseService.getUserExpensesByCriteria(userId, category, subCategory);
     }
 }

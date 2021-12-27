@@ -1,4 +1,4 @@
-package com.expense.dao;
+package com.expense.infrastructure.dao;
 
 import com.expense.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
