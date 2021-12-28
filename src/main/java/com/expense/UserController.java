@@ -1,5 +1,6 @@
 package com.expense;
 
+import com.expense.domain.Filter;
 import com.expense.entity.Expense;
 import com.expense.entity.User;
 import com.expense.service.ExpenseService;
@@ -45,6 +46,11 @@ public class UserController {
                                                    @RequestParam(name = "category") String category,
                                                    @RequestParam(name = "subCategory") String subCategory) {
 
-        return this.expenseService.getUserExpensesByCriteria(userId, category, subCategory);
+        return this.expenseService.getUserExpensesByCategoryAndSubcategory(userId, category, subCategory);
+    }
+
+    @PostMapping("/expenses") // TODO: Modify path and add @PathVariable with user id
+    public List<Expense> getUserExpensesByCriteria(@RequestBody List<Filter> filters) {
+        return this.expenseService.getExpensesByCriteria(filters);
     }
 }
