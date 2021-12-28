@@ -29,6 +29,12 @@ public class Expense {
     @Column(name = "subCategory")
     private String subCategory;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "comment")
+    private String comment;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
