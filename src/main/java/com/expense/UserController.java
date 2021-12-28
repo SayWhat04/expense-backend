@@ -5,23 +5,17 @@ import com.expense.entity.Expense;
 import com.expense.entity.User;
 import com.expense.service.ExpenseService;
 import com.expense.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
     private final ExpenseService expenseService;
-
-    @Autowired
-    public UserController(UserService userService, ExpenseService expenseService) {
-        this.userService = userService;
-        this.expenseService = expenseService;
-    }
 
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable int userId) {
@@ -42,11 +36,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/expenses")
-    public List<Expense> getUserExpensesByCriteria(@PathVariable int userId,
-                                                   @RequestParam(name = "category") String category,
-                                                   @RequestParam(name = "subCategory") String subCategory) {
-
-        return this.expenseService.getUserExpensesByCategoryAndSubcategory(userId, category, subCategory);
+    public List<Expense> getUserExpensesByCriteria(@PathVariable int userId) {
+        return this.expenseService.getUserExpenses(userId);
     }
 
     @PostMapping("/expenses") // TODO: Modify path and add @PathVariable with user id

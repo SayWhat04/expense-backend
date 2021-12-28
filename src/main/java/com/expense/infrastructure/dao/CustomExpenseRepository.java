@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.naming.OperationNotSupportedException;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,10 +78,13 @@ public class CustomExpenseRepository {
             return Double.valueOf(value);
         } else if (fieldType.isAssignableFrom(Integer.class)) {
             return Integer.valueOf(value);
+        } else if (fieldType.isAssignableFrom(BigInteger.class)) {
+            return new BigInteger(value);
         } else if (Enum.class.isAssignableFrom(fieldType)) {
-            return Enum.valueOf(fieldType, value);
+            Enum anEnum = Enum.valueOf(fieldType, value);
+            return anEnum;
         }
-        return null;
+        return value;
     }
 
     private List<Object> castToRequiredType(Class fieldType, List<String> values) {

@@ -2,18 +2,13 @@ package com.expense.service;
 
 import com.expense.entity.User;
 import com.expense.infrastructure.dao.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public User getUserById(int userId) {
         User user = this.userRepository.getById(userId);
@@ -24,5 +19,4 @@ public class UserService {
         this.userRepository.save(user);
         return user;
     }
-
 }

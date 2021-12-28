@@ -4,21 +4,16 @@ import com.expense.domain.Filter;
 import com.expense.entity.Expense;
 import com.expense.infrastructure.dao.CustomExpenseRepository;
 import com.expense.infrastructure.dao.ExpenseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final CustomExpenseRepository customExpenseRepository;
-
-    @Autowired
-    public ExpenseService(ExpenseRepository expenseRepository, CustomExpenseRepository customExpenseRepository) {
-        this.expenseRepository = expenseRepository;
-        this.customExpenseRepository = customExpenseRepository;
-    }
 
     public void addExpenses(List<Expense> expenses) {
         this.expenseRepository.saveAll(expenses);
@@ -38,7 +33,9 @@ public class ExpenseService {
     }
 
     public List<Expense> getExpensesByCriteria(List<Filter> filters) {
-        return this.customExpenseRepository.getQueryResult(filters);
+        List<Expense> queryResult = this.customExpenseRepository.getQueryResult(filters);
+        setUserReferenceToNull(queryResult);
+        return queryResult;
     }
 
     private void setUserReferenceToNull(List<Expense> expenses) {
