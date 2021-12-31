@@ -1,5 +1,6 @@
 package com.expense.service;
 
+import com.expense.domain.UserDto;
 import com.expense.entity.User;
 import com.expense.infrastructure.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,14 @@ public class UserService {
         return user;
     }
 
-    public User addUser(User user) {
-        this.userRepository.save(user);
-        return user;
+    public User addUser(UserDto user) {
+        User userEntity = User.builder()
+                .name(user.getName())
+                .surname(user.getSurname())
+                .email(user.getEmail())
+                .expenses(user.getExpenses())
+                .build();
+        this.userRepository.save(userEntity);
+        return userEntity;
     }
 }

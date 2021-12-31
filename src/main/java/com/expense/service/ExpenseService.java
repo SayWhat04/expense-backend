@@ -1,5 +1,6 @@
 package com.expense.service;
 
+import com.expense.domain.ExpenseDto;
 import com.expense.domain.Filter;
 import com.expense.entity.Expense;
 import com.expense.infrastructure.dao.CustomExpenseRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +39,24 @@ public class ExpenseService {
         setUserReferenceToNull(queryResult);
         return queryResult;
     }
+
+    public List<Expense> convertExpenseDtosToExpenseEntities(List<ExpenseDto> expenseDtos) {
+        return expenseDtos.stream()
+                .map(this::convertExpenseDtoToExpenseEntity)
+                .collect(Collectors.toList());
+    }
+
+    private Expense convertExpenseDtoToExpenseEntity(ExpenseDto expenseDto) {
+        return Expense.builder()
+                .date(expenseDto.getDate())
+                .amount(expenseDto.getAmount())
+                .category(expenseDto.getCategory())
+                .subCategory(expenseDto.getSubCategory())
+                .comment(expenseDto.getComment())
+                .user(expenseDto.getUser())
+                .build();
+    }
+
 
     private void setUserReferenceToNull(List<Expense> expenses) {
         for (Expense e : expenses) {

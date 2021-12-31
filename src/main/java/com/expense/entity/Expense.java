@@ -1,5 +1,6 @@
 package com.expense.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,9 +9,9 @@ import java.util.Date;
 
 @Data
 @Entity
+@Builder
 @Table(name = "expense")
 public class Expense {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
