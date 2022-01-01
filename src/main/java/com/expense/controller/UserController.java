@@ -10,6 +10,7 @@ import com.expense.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,13 +26,13 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public User addUser(@RequestBody UserDto user) {
+    public User addUser(@Valid @RequestBody UserDto user) {
         return this.userService.addUser(user);
     }
 
     @PatchMapping("/{userId}/expenses")
     public void addExpensesToUser(@PathVariable int userId,
-                                  @RequestBody List<ExpenseDto> expenseDtos) {
+                                  @Valid @RequestBody List<ExpenseDto> expenseDtos) {
         List<Expense> expenses =
                 this.expenseService.convertExpenseDtosToExpenseEntities(expenseDtos);
         User user = this.userService.getUserById(userId);
