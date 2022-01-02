@@ -34,8 +34,8 @@ public class ExpenseService {
         return expenses;
     }
 
-    public List<Expense> getExpensesByCriteria(List<Filter> filters) {
-        List<Expense> queryResult = this.customExpenseRepository.getQueryResult(filters);
+    public List<Expense> getExpensesByCriteria(int userId, List<Filter> filters) {
+        List<Expense> queryResult = this.customExpenseRepository.getQueryResult(userId, filters);
         setUserReferenceToNull(queryResult);
         return queryResult;
     }

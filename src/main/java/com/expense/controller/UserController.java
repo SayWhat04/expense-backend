@@ -20,14 +20,14 @@ public class UserController {
     private final UserService userService;
     private final ExpenseService expenseService;
 
-    @GetMapping("/{userId}")
-    public User getUserById(@PathVariable int userId) {
-        return userService.getUserById(userId);
-    }
-
     @PostMapping("/")
     public User addUser(@Valid @RequestBody UserDto user) {
         return this.userService.addUser(user);
+    }
+
+    @GetMapping("/{userId}")
+    public User getUserById(@PathVariable int userId) {
+        return userService.getUserById(userId);
     }
 
     @PatchMapping("/{userId}/expenses")
@@ -45,8 +45,9 @@ public class UserController {
         return this.expenseService.getUserExpenses(userId);
     }
 
-    @PostMapping("/expenses") // TODO: Modify path and add @PathVariable with user id
-    public List<Expense> getUserExpensesByCriteria(@RequestBody List<Filter> filters) {
-        return this.expenseService.getExpensesByCriteria(filters);
+    @PostMapping("/{userId}/expenses")
+    public List<Expense> getUserExpensesByCriteria(@PathVariable int userId,
+                                                   @RequestBody List<Filter> filters) {
+        return this.expenseService.getExpensesByCriteria(userId, filters);
     }
 }

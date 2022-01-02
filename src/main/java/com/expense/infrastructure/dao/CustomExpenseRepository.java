@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -15,10 +16,14 @@ public class CustomExpenseRepository {
     private final ExpenseRepository expenseRepository;
     private final ExpenseSpecificationFactory expenseSpecificationFactory;
 
-    // TODO: Implement fetching Expenses only for passed userId
-    public List<Expense> getQueryResult(List<Filter> filters) {
+    public List<Expense> getQueryResult(int userId, List<Filter> filters) {
         if (!filters.isEmpty()) {
-            return expenseRepository.findAll(createSpecificationFromFilters(filters));
+            List<Expense> resultExpenses = expenseRepository.findAll(createSpecificationFromFilters(filters));
+            // FIXME: Workaround solution. Implement later with use of Specifications.
+            // FIXME: Can't stay like this because of very low performance and poor design.
+            return resultExpenses.stream()
+                    .filter(expense -> expense.getUser().getId() == userId)
+                    .collect(Collectors.toList());
         } else {
             return expenseRepository.findAll();
         }
