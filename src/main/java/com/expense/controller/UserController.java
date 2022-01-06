@@ -50,4 +50,17 @@ public class UserController {
                                                    @RequestBody List<Filter> filters) {
         return this.expenseService.getExpensesByCriteria(userId, filters);
     }
+
+    @DeleteMapping("/{userId}/expenses")
+    public void deleteExpensesById(@RequestParam List<Integer> expenseIds) {
+        this.expenseService.deleteExpensesById(expenseIds);
+    }
+
+    @PatchMapping("/{userId}/expenses/{expenseId}") // TODO: PATCH or PUT?
+    public void editSingleExpense(@PathVariable int userId,
+                                  @PathVariable int expenseId,
+                                  @Valid @RequestBody ExpenseDto expenseDtos) {
+        Expense expenses =
+                this.expenseService.convertExpenseDtoToExpenseEntity(expenseDtos);
+    }
 }
