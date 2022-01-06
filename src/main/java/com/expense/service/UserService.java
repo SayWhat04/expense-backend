@@ -12,8 +12,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User getUserById(int userId) {
-        User user = this.userRepository.getById(userId);
-        return user;
+        return this.userRepository.getById(userId);
     }
 
     public User addUser(UserDto user) {
@@ -23,7 +22,6 @@ public class UserService {
                 .email(user.getEmail())
                 .expenses(user.getExpenses())
                 .build();
-        this.userRepository.save(userEntity);
-        return userEntity;
+        return this.userRepository.save(userEntity);
     }
 }

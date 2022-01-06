@@ -40,13 +40,21 @@ public class ExpenseService {
         return queryResult;
     }
 
+    public void deleteExpensesById(List<Integer> expenseIds) {
+        this.expenseRepository.deleteAllById(expenseIds);
+    }
+
+    public void updateExpense(List<Integer> expenseIds) {
+        //this.expenseRepository.
+    }
+
     public List<Expense> convertExpenseDtosToExpenseEntities(List<ExpenseDto> expenseDtos) {
         return expenseDtos.stream()
                 .map(this::convertExpenseDtoToExpenseEntity)
                 .collect(Collectors.toList());
     }
 
-    private Expense convertExpenseDtoToExpenseEntity(ExpenseDto expenseDto) {
+    public Expense convertExpenseDtoToExpenseEntity(ExpenseDto expenseDto) {
         return Expense.builder()
                 .date(expenseDto.getDate())
                 .amount(expenseDto.getAmount())
@@ -56,7 +64,6 @@ public class ExpenseService {
                 .user(expenseDto.getUser())
                 .build();
     }
-
 
     private void setUserReferenceToNull(List<Expense> expenses) {
         for (Expense e : expenses) {
