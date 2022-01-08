@@ -21,5 +21,8 @@ public class UserDto {
     @NotBlank(message = "User email is mandatory")
     private String email;
 
+    @NotBlank(message = "password")
+    private String password;
+
     private List<Expense> expenses;
 }
