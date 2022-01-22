@@ -1,7 +1,6 @@
 package com.expense.service;
 
 import com.expense.domain.CreateUserRequest;
-import com.expense.domain.UserDto;
 import com.expense.entity.User;
 import com.expense.infrastructure.dao.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +19,6 @@ public class UserService {
 
     public User getUserById(int userId) {
         return this.userRepository.getById(userId);
-    }
-
-    @Transactional
-    public User addUser(UserDto user) {
-        User userEntity = User.builder()
-                .username(user.getUsername())
-                .fullName(user.getFullName())
-                .expenses(user.getExpenses())
-                .build();
-        return this.userRepository.save(userEntity);
     }
 
     @Transactional

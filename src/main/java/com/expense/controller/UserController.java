@@ -2,7 +2,6 @@ package com.expense.controller;
 
 import com.expense.domain.ExpenseDto;
 import com.expense.domain.Filter;
-import com.expense.domain.UserDto;
 import com.expense.entity.Expense;
 import com.expense.entity.User;
 import com.expense.service.ExpenseService;
@@ -14,16 +13,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final ExpenseService expenseService;
-
-    @PostMapping("/")
-    public User addUser(@Valid @RequestBody UserDto user) {
-        return this.userService.addUser(user);
-    }
 
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable int userId) {

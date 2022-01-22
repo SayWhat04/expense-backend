@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.http.HttpServletResponse;
 
-@Configuration // TODO: Make sure that this is needed
+@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -60,8 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/public/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/api/v1/user/**").authenticated()
                 .and()
-                .headers().frameOptions().sameOrigin();// temp solution to enable using h2-console
+                .headers().frameOptions().sameOrigin(); // temp solution to enable using h2-console
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
