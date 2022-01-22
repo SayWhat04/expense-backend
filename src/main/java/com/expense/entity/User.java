@@ -20,14 +20,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "username", unique = true)
+    private String username;
 
-    @Column(name = "surname")
-    private String surname;
-
-    @Column(name = "email", unique = true)
-    private String email;
+    @Column(name = "fullName")
+    private String fullName;
 
     @Column(name = "password")
     private String password;

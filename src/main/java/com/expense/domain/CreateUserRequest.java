@@ -1,25 +1,25 @@
 package com.expense.domain;
 
 import com.expense.entity.Expense;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Set;
 
 @Data
-@Builder
-public class UserDto {
-    @Email(message = "User email is invalid")
-    @NotBlank(message = "User name is mandatory")
+public class CreateUserRequest {
+    @NotBlank
+    @Email
     private String username;
-
-    @NotBlank(message = "User fullName is mandatory")
+    @NotBlank
     private String fullName;
-
-    @NotBlank(message = "Password is mandatory")
+    @NotBlank
     private String password;
+    @NotBlank
+    private String rePassword;
 
+    private Set<String> authorities;
     private List<Expense> expenses;
 }

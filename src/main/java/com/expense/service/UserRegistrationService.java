@@ -18,17 +18,20 @@ public class UserRegistrationService {
         if (checkIfUserExists(user)) {
             throw new UserExistsException("User for this mail already exists!");
         }
-        User userEntity = User.builder()
-                .name(user.getName())
-                .surname(user.getSurname())
-                .email(user.getEmail())
-                .build();
-        encodePassword(userEntity, user);
-        userRepository.save(userEntity);
+        userRepository.save(prepareUserData(user));
     }
 
     private boolean checkIfUserExists(UserDto user) {
-        return userRepository.findByEmail(user.getEmail()) != null;
+        return userRepository.findByUsername(user.getUsername()).isPresent();
+    }
+
+    private User prepareUserData(UserDto user) {
+        User userEntity = User.builder()
+                .username(user.getUsername())
+                .fullName(user.getFullName())
+                .build();
+        encodePassword(userEntity, user);
+        return userEntity;
     }
 
     private void encodePassword(User userEntity, UserDto user) {
