@@ -42,6 +42,4 @@ public class UserService {
 
         return userRepository.save(userEntity);
     }
-
-
 }
